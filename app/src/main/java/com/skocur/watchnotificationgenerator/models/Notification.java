@@ -1,5 +1,6 @@
 package com.skocur.watchnotificationgenerator.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -41,5 +42,13 @@ public class Notification {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getCategory() + " "
+                + getNotificationTitle() + " "
+                + getNotificationContent();
     }
 }

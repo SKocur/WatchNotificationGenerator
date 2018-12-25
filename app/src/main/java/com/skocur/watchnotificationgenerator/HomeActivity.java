@@ -1,13 +1,14 @@
 package com.skocur.watchnotificationgenerator;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.skocur.watchnotificationgenerator.models.Notification;
 import com.skocur.watchnotificationgenerator.sqlutils.MainDatabase;
 
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 public class HomeActivity extends AppCompatActivity {
@@ -22,7 +23,9 @@ public class HomeActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(),
                 MainDatabase.class, "watch-notifications-db").build();
 
-        generateRandomDataAndInsertToDabase();
+        generateRandomDataAndInsertToDatabase();
+
+        generateNotificationsFromEverything();
 
         db.close();
     }
@@ -30,9 +33,12 @@ public class HomeActivity extends AppCompatActivity {
     private void generateNotificationsFromEverything() {
 
         List<Notification> notifications = db.notificationDao().getAll();
+        for (Notification notification : notifications) {
+            Log.i("notification", notification.toString());
+        }
     }
 
-    private void generateRandomDataAndInsertToDabase() {
+    private void generateRandomDataAndInsertToDatabase() {
         Notification notification = new Notification();
 
         for (int i = 0; i < 10; ++i) {
