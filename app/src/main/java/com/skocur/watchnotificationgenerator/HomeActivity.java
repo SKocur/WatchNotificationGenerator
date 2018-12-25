@@ -4,37 +4,43 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.skocur.watchnotificationgenerator.models.Notification;
-import com.skocur.watchnotificationgenerator.sqlutils.MainDatabase;
+import com.skocur.watchnotificationgenerator.sqlutils.DatabaseService;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public MainDatabase db;
+    private DatabaseService databaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                MainDatabase.class, "watch-notifications-db").build();
+        databaseService = new DatabaseService(getApplicationContext());
 
         generateRandomDataAndInsertToDatabase();
-
-        generateNotificationsFromEverything();
-
-        db.close();
+        //generateNotificationsFromEverything();
     }
 
     private void generateNotificationsFromEverything() {
 
-        List<Notification> notifications = db.notificationDao().getAll();
-        for (Notification notification : notifications) {
-            Log.i("notification", notification.toString());
+        try {
+            List<Notification> notifications = databaseService.getAllNotifications();
+            for (Notification notification : notifications) {
+                try {
+                    Log.i("notification", notification.toString());
+                } catch (NullPointerException e) {
+                    Log.e("!", e.toString());
+                }
+            }
+        } catch (InterruptedException e) {
+            Log.e("!", e.toString());
+        } catch (ExecutionException e) {
+            Log.e("!", e.toString());
         }
     }
 
@@ -46,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
             notification.setNotificationTitle("General notification");
             notification.setNotificationContent("TEST " + (i * Math.random() * 100));
 
-            db.notificationDao().insertAll(notification);
+            databaseService.addNotification(notification);
         }
     }
 }

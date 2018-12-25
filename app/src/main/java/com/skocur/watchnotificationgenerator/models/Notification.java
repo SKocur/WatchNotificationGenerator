@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Notification {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int uid;
 
     @ColumnInfo(name="notification_title")
