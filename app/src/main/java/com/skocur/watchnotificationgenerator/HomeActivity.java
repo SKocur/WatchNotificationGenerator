@@ -51,13 +51,19 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * IMPORTANT NOTE
+     * User has to add this app to allowed applications on watch settings.
+     *
+     * @param notification
+     */
     private void displayNotification(Notification notification) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NOTIFICATIONS_CHANNEL)
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle(notification.getNotificationTitle())
                 .setContentText(notification.notificationContent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+                .extend(new NotificationCompat.WearableExtender().setHintShowBackgroundOnly(true));
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(NOTIFICATIONS_COUNTER++, mBuilder.build());
