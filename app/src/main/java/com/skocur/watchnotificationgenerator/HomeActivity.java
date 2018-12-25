@@ -1,5 +1,8 @@
 package com.skocur.watchnotificationgenerator;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,37 +13,69 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private static final String NOTIFICATIONS_CHANNEL = "s0x";
+    private static int NOTIFICATIONS_COUNTER = 0;
     private DatabaseService databaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNotificationChannel();
         setContentView(R.layout.activity_home);
 
         databaseService = new DatabaseService(getApplicationContext());
 
-        generateRandomDataAndInsertToDatabase();
-        //generateNotificationsFromEverything();
+        //generateRandomDataAndInsertToDatabase();
+        generateNotificationsFromEverything();
     }
 
     private void generateNotificationsFromEverything() {
-
         try {
             List<Notification> notifications = databaseService.getAllNotifications();
             for (Notification notification : notifications) {
-                try {
-                    Log.i("notification", notification.toString());
-                } catch (NullPointerException e) {
-                    Log.e("!", e.toString());
-                }
+                //Thread.sleep(1000);
+                displayNotification(notification);
+                Log.e("notification", notification.toString());
             }
         } catch (InterruptedException e) {
             Log.e("!", e.toString());
         } catch (ExecutionException e) {
             Log.e("!", e.toString());
+        } catch (NullPointerException e) {
+            Log.e("!", e.toString());
+        }
+    }
+
+    private void displayNotification(Notification notification) {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NOTIFICATIONS_CHANNEL)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle(notification.getNotificationTitle())
+                .setContentText(notification.notificationContent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(NOTIFICATIONS_COUNTER++, mBuilder.build());
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = NOTIFICATIONS_CHANNEL;
+            String description = "Notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(NOTIFICATIONS_CHANNEL, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 
