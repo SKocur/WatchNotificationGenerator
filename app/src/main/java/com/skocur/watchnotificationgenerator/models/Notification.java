@@ -16,6 +16,13 @@ public class Notification {
     @ColumnInfo(name = "notification_content")
     public String notificationContent;
 
+    @ColumnInfo(name = "category")
+    public String category;
+
+    public String getCategory() {
+        return category;
+    }
+
     public String getNotificationTitle() {
         return notificationTitle;
     }
@@ -30,5 +37,9 @@ public class Notification {
 
     public void setNotificationContent(String notificationContent) {
         this.notificationContent = notificationContent;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
