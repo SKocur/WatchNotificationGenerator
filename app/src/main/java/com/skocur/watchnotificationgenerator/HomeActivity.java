@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.skocur.watchnotificationgenerator.models.Category;
 import com.skocur.watchnotificationgenerator.models.Notification;
 import com.skocur.watchnotificationgenerator.sqlutils.DatabaseService;
 
@@ -53,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
 
     /**
      * IMPORTANT NOTE
-     * User has to add this app to allowed applications on watch settings.
+     * User has to add this app to "allowed applications' on watch settings.
      *
      * @param notification
      */
@@ -87,9 +88,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private void generateRandomDataAndInsertToDatabase() {
         Notification notification = new Notification();
+        Category category = new Category();
 
         for (int i = 0; i < 10; ++i) {
-            notification.setCategory("general");
+            category.setCategoryName("general");
+
+            notification.setCategory(category);
             notification.setNotificationTitle("General notification");
             notification.setNotificationContent("TEST " + (i * Math.random() * 100));
 

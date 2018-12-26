@@ -2,6 +2,7 @@ package com.skocur.watchnotificationgenerator.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -17,10 +18,11 @@ public class Notification {
     @ColumnInfo(name = "notification_content")
     public String notificationContent;
 
+    @Embedded
     @ColumnInfo(name = "category")
-    public String category;
+    public Category category;
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -40,7 +42,7 @@ public class Notification {
         this.notificationContent = notificationContent;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

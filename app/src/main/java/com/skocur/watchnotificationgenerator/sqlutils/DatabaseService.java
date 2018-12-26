@@ -3,6 +3,7 @@ package com.skocur.watchnotificationgenerator.sqlutils;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.skocur.watchnotificationgenerator.models.Category;
 import com.skocur.watchnotificationgenerator.models.Notification;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import androidx.room.Room;
 
 public class DatabaseService {
 
-    private MainDatabase db ;
+    private MainDatabase db;
 
     public DatabaseService(Context context){
         db = Room.databaseBuilder(context,
@@ -27,6 +28,14 @@ public class DatabaseService {
         return new NotificationDownloaderAsyncTask().execute().get();
     }
 
+    public void addCategory(Category category) {
+        new CategoryInserterAsyncTask().execute(category);
+    }
+
+    public List<Category> getAllCategories() throws InterruptedException, ExecutionException {
+        return new CategoryDownloaderAsyncTask().execute().get();
+    }
+
     private class NotificationInserterAsyncTask extends AsyncTask<Notification, Void, Void> {
 
         @Override
@@ -36,12 +45,28 @@ public class DatabaseService {
         }
     }
 
-
     private class NotificationDownloaderAsyncTask extends AsyncTask<Void, Void, List<Notification>> {
 
         @Override
         protected List<Notification> doInBackground(Void... url) {
             return db.notificationDao().getAll();
+        }
+    }
+
+    private class CategoryInserterAsyncTask extends AsyncTask<Category, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Category... categories) {
+            db.categoryDao().insertAll(categories);
+            return null;
+        }
+    }
+
+    private class CategoryDownloaderAsyncTask extends AsyncTask<Void, Void, List<Category>> {
+
+        @Override
+        protected List<Category> doInBackground(Void... url) {
+            return db.categoryDao().getAllCategories();
         }
     }
 }

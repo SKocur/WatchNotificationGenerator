@@ -16,7 +16,7 @@ public interface NotificationDao {
     List<Notification> getAll();
 
     @Query("SELECT * FROM notification " +
-            "WHERE notification.category LIKE :category")
+            "WHERE notification.category_name LIKE :category")
     List<Notification> getAllFromCategory(String category);
 
     @Insert
