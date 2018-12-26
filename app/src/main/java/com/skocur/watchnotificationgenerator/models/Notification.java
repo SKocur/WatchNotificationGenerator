@@ -19,7 +19,6 @@ public class Notification {
     public String notificationContent;
 
     @Embedded
-    @ColumnInfo(name = "category")
     public Category category;
 
     public Category getCategory() {

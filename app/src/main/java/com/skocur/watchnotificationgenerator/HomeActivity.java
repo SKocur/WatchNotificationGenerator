@@ -1,10 +1,15 @@
 package com.skocur.watchnotificationgenerator;
 
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 import com.skocur.watchnotificationgenerator.models.Category;
 import com.skocur.watchnotificationgenerator.models.Notification;
@@ -28,11 +33,41 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         createNotificationChannel();
         setContentView(R.layout.activity_home);
+        initiateViews();
 
         databaseService = new DatabaseService(getApplicationContext());
 
         //generateRandomDataAndInsertToDatabase();
         generateNotificationsFromEverything();
+    }
+
+    private void initiateViews() {
+        findViewById(R.id.fab_add_category).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                builder.setTitle("Add category");
+
+                final EditText input = new EditText(HomeActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                builder.setView(input);
+
+                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // TODO: Insert category to database
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                builder.show();
+            }
+        });
     }
 
     private void generateNotificationsFromEverything() {
