@@ -7,8 +7,15 @@
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
+    <ListView
+        android:id="@+id/activity_home_list_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_category"
+        android:id="@+id/activity_home_fab_add_category"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"

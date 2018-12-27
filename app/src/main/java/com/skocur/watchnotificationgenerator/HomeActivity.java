@@ -10,11 +10,14 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 
+import com.skocur.watchnotificationgenerator.adapters.CategoriesAdapter;
 import com.skocur.watchnotificationgenerator.models.Category;
 import com.skocur.watchnotificationgenerator.models.Notification;
 import com.skocur.watchnotificationgenerator.sqlutils.DatabaseService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -33,16 +36,29 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         createNotificationChannel();
         setContentView(R.layout.activity_home);
-        initiateViews();
 
         databaseService = new DatabaseService(getApplicationContext());
+
+        initiateViews();
 
         //generateRandomDataAndInsertToDatabase();
         generateNotificationsFromEverything();
     }
 
     private void initiateViews() {
-        findViewById(R.id.fab_add_category).setOnClickListener(new View.OnClickListener() {
+        try {
+            ArrayList<Category> categories = (ArrayList<Category>) databaseService.getAllCategories();
+            CategoriesAdapter adapter = new CategoriesAdapter(this, categories);
+
+            ListView categoriesListView = findViewById(R.id.activity_home_list_category);
+            categoriesListView.setAdapter(adapter);
+        } catch (InterruptedException e) {
+            Log.e("!", e.toString());
+        } catch (ExecutionException e2) {
+            Log.e("!", e2.toString());
+        }
+
+        findViewById(R.id.activity_home_fab_add_category).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
