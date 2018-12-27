@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
 
 import com.skocur.watchnotificationgenerator.adapters.CategoriesAdapter;
 import com.skocur.watchnotificationgenerator.models.Category;
@@ -63,10 +66,18 @@ public class HomeActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                 builder.setTitle("Add category");
 
+                LinearLayout container = new LinearLayout(HomeActivity.this);
+                container.setOrientation(LinearLayout.VERTICAL);
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(30, 5, 30, 5);
+
                 final EditText input = new EditText(HomeActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
 
-                builder.setView(input);
+                container.addView(input, params);
+                builder.setView(container);
 
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
