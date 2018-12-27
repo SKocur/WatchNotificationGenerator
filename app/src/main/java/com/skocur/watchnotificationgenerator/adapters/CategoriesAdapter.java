@@ -1,6 +1,7 @@
 package com.skocur.watchnotificationgenerator.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.skocur.watchnotificationgenerator.NotificationsActivity;
 import com.skocur.watchnotificationgenerator.R;
 import com.skocur.watchnotificationgenerator.models.Category;
 
@@ -25,26 +27,33 @@ public class CategoriesAdapter extends ArrayAdapter<Category> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Category category = getItem(position);
+        final Category category = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_category, parent, false);
         }
 
         TextView tvName = convertView.findViewById(R.id.item_category_name);
-        tvName.setClickable(true);
-        tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         try {
             tvName.setText(category.getCategoryName());
         } catch (NullPointerException e) {
             Log.e("!", e.toString());
         }
+
+        convertView.findViewById(R.id.item_category_container).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent intent = new Intent(getContext(), NotificationsActivity.class);
+                    intent.putExtra("category_name", category.getCategoryName());
+
+                    getContext().startActivity(intent);
+                } catch (NullPointerException e) {
+                    Log.e("!", e.toString());
+                }
+            }
+        });
 
         return convertView;
     }

@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.skocur.watchnotificationgenerator">
 
-    <!--<meta-data
+    <!--
+    <meta-data
         tools:replace="android:value"
         android:name="android.support.VERSION"
-        android:value="28.0.0" />-->
-
+        android:value="28.0.0" />
+    -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".NotificationsActivity"></activity>
     </application>
 
 </manifest>
