@@ -18,12 +18,23 @@ public class Notification {
     @ColumnInfo(name = "notification_content")
     public String notificationContent;
 
-    @Embedded
-    public Category category;
+    @ColumnInfo(name = "category_uid")
+    public int categoryUid;
 
-    public Category getCategory() {
-        return category;
+    public int getCategoryUid() {
+        return categoryUid;
     }
+
+    public void setCategoryUid(int categoryUid) {
+        this.categoryUid = categoryUid;
+    }
+
+    //@Embedded
+    //public Category category;
+
+    /*public Category getCategory() {
+        return category;
+    }*/
 
     public String getNotificationTitle() {
         return notificationTitle;
@@ -41,14 +52,14 @@ public class Notification {
         this.notificationContent = notificationContent;
     }
 
-    public void setCategory(Category category) {
+    /*public void setCategory(Category category) {
         this.category = category;
-    }
+    }*/
 
     @NonNull
     @Override
     public String toString() {
-        return getCategory() + " "
+        return getCategoryUid() + " "
                 + getNotificationTitle() + " "
                 + getNotificationContent();
     }

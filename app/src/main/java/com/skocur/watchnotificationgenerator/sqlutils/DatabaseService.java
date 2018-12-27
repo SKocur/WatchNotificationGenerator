@@ -28,6 +28,10 @@ public class DatabaseService {
         return new NotificationDownloaderAsyncTask().execute().get();
     }
 
+    public List<Notification> getAllNotificationsFromCategory(String category) throws InterruptedException, ExecutionException {
+        return new NotificationCategoryDownloaderAsyncTask().execute(category).get();
+    }
+
     public void addCategory(Category category) {
         new CategoryInserterAsyncTask().execute(category);
     }
@@ -42,6 +46,14 @@ public class DatabaseService {
         protected Void doInBackground(Notification... notifications) {
             db.notificationDao().insertAll(notifications);
             return null;
+        }
+    }
+
+    private class NotificationCategoryDownloaderAsyncTask extends AsyncTask<String, Void, List<Notification>> {
+
+        @Override
+        protected List<Notification> doInBackground(String... data) {
+            return db.notificationDao().getAllFromCategory(data[0]);
         }
     }
 

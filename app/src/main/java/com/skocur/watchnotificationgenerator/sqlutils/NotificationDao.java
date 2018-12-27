@@ -16,7 +16,8 @@ public interface NotificationDao {
     List<Notification> getAll();
 
     @Query("SELECT * FROM notification " +
-            "WHERE notification.category_name LIKE :category")
+            "INNER JOIN category ON notification.category_uid = category.categoryUid " +
+            "WHERE category.category_name LIKE :category")
     List<Notification> getAllFromCategory(String category);
 
     @Insert

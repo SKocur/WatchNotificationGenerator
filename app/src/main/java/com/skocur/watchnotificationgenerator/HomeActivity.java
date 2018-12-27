@@ -29,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String NOTIFICATIONS_CHANNEL = "s0x";
     private static int NOTIFICATIONS_COUNTER = 0;
-    private DatabaseService databaseService;
+    public static DatabaseService databaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,6 @@
 package com.skocur.watchnotificationgenerator.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,25 +8,24 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.skocur.watchnotificationgenerator.NotificationsActivity;
 import com.skocur.watchnotificationgenerator.R;
-import com.skocur.watchnotificationgenerator.models.Category;
+import com.skocur.watchnotificationgenerator.models.Notification;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class CategoriesAdapter extends ArrayAdapter<Category> {
+public class NotificationsAdapter extends ArrayAdapter<Notification> {
 
-    public CategoriesAdapter(Context context, ArrayList<Category> categories){
-        super(context, 0, categories);
+    public NotificationsAdapter(Context context, ArrayList<Notification> notifications) {
+        super(context, 0, notifications);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final Category category = getItem(position);
+        final Notification notification = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_general, parent, false);
@@ -36,7 +34,7 @@ public class CategoriesAdapter extends ArrayAdapter<Category> {
         TextView tvName = convertView.findViewById(R.id.item_general_name);
 
         try {
-            tvName.setText(category.getCategoryName());
+            tvName.setText(notification.getNotificationTitle());
         } catch (NullPointerException e) {
             Log.e("!", e.toString());
         }
@@ -44,14 +42,7 @@ public class CategoriesAdapter extends ArrayAdapter<Category> {
         convertView.findViewById(R.id.item_general_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Intent intent = new Intent(getContext(), NotificationsActivity.class);
-                    intent.putExtra("category_name", category.getCategoryName());
-
-                    getContext().startActivity(intent);
-                } catch (NullPointerException e) {
-                    Log.e("!", e.toString());
-                }
+                //TODO: Opening new activity with notification details
             }
         });
 
