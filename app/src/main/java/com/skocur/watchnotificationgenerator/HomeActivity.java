@@ -41,7 +41,6 @@ public class HomeActivity extends AppCompatActivity {
 
         initiateViews();
 
-        //generateRandomDataAndInsertToDatabase();
         generateNotificationsFromEverything();
     }
 
@@ -72,7 +71,10 @@ public class HomeActivity extends AppCompatActivity {
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // TODO: Insert category to database
+                        Category category = new Category();
+                        category.setCategoryName(input.getText().toString());
+
+                        databaseService.addCategory(category);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -134,21 +136,6 @@ public class HomeActivity extends AppCompatActivity {
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    private void generateRandomDataAndInsertToDatabase() {
-        Notification notification = new Notification();
-        Category category = new Category();
-
-        for (int i = 0; i < 10; ++i) {
-            category.setCategoryName("general");
-
-            notification.setCategory(category);
-            notification.setNotificationTitle("General notification");
-            notification.setNotificationContent("TEST " + (i * Math.random() * 100));
-
-            databaseService.addNotification(notification);
         }
     }
 }

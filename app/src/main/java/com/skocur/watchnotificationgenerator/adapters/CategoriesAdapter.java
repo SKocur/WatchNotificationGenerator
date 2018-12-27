@@ -32,6 +32,13 @@ public class CategoriesAdapter extends ArrayAdapter<Category> {
         }
 
         TextView tvName = convertView.findViewById(R.id.item_category_name);
+        tvName.setClickable(true);
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         try {
             tvName.setText(category.getCategoryName());
