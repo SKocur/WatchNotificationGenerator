@@ -62,10 +62,10 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.activity_home_fab_add_category).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomAddAlertDialog customAddAlertDialog = new CustomAddAlertDialog(HomeActivity.this);
-                customAddAlertDialog.setTitle("Add category");
-
-                customAddAlertDialog.setPositiveButton(new CustomAddAlertDialog.InputReadyListener() {
+                CustomAddAlertDialog customAddAlertDialog = new CustomAddAlertDialog();
+                customAddAlertDialog.alertFor(HomeActivity.this)
+                        .setTitle("Add category")
+                        .setPositiveButton(new CustomAddAlertDialog.InputReadyListener() {
                     @Override
                     public void onClick(EditText input) {
                         Category category = new Category();
@@ -73,9 +73,7 @@ public class HomeActivity extends AppCompatActivity {
 
                         databaseService.addCategory(category);
                     }
-                });
-
-                customAddAlertDialog.build();
+                }).build();
             }
         });
     }

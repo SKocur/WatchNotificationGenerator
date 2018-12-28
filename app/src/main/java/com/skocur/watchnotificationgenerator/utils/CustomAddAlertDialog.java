@@ -7,9 +7,6 @@ import android.text.InputType;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.skocur.watchnotificationgenerator.HomeActivity;
-import com.skocur.watchnotificationgenerator.models.Category;
-
 public class CustomAddAlertDialog {
 
     private String alertTitle;
@@ -17,20 +14,22 @@ public class CustomAddAlertDialog {
     private DialogInterface.OnClickListener onClickListener;
     private InputReadyListener inputReadyListener;
 
-    public CustomAddAlertDialog(Context context) {
+    public CustomAddAlertDialog alertFor(Context context) {
         this.context = context;
+
+        return this;
     }
 
-    public void setTitle(String alertTitle) {
+    public CustomAddAlertDialog setTitle(String alertTitle) {
         this.alertTitle = alertTitle;
+
+        return this;
     }
 
-    public void setPositiveButton(DialogInterface.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
-
-    public void setPositiveButton(InputReadyListener inputReadyListener) {
+    public CustomAddAlertDialog setPositiveButton(InputReadyListener inputReadyListener) {
         this.inputReadyListener = inputReadyListener;
+
+        return this;
     }
 
     public void build() {

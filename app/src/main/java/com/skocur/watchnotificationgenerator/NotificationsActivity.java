@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.skocur.watchnotificationgenerator.adapters.NotificationsAdapter;
 import com.skocur.watchnotificationgenerator.models.Notification;
+import com.skocur.watchnotificationgenerator.utils.CustomAddAlertDialog;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -45,7 +47,15 @@ public class NotificationsActivity extends AppCompatActivity {
         findViewById(R.id.activity_notifications_fab_add_notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                CustomAddAlertDialog customAddAlertDialog = new CustomAddAlertDialog();
+                customAddAlertDialog.alertFor(NotificationsActivity.this)
+                        .setTitle("Add Notification")
+                        .setPositiveButton(new CustomAddAlertDialog.InputReadyListener() {
+                            @Override
+                            public void onClick(EditText input) {
+                                // TODO: Add new activity in which user can create notification with passed extras to it
+                            }
+                        }).build();
             }
         });
     }
