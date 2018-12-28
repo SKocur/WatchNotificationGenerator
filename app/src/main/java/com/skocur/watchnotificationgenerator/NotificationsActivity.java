@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import com.skocur.watchnotificationgenerator.adapters.NotificationsAdapter;
@@ -41,6 +42,11 @@ public class NotificationsActivity extends AppCompatActivity {
             Log.e("!", e.toString());
         }
 
-        // TODO: Add FAB responsible for adding new notifications to given category
+        findViewById(R.id.activity_notifications_fab_add_notification).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }

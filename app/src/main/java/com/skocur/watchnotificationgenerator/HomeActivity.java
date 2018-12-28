@@ -9,16 +9,15 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TableLayout;
 
 import com.skocur.watchnotificationgenerator.adapters.CategoriesAdapter;
 import com.skocur.watchnotificationgenerator.models.Category;
 import com.skocur.watchnotificationgenerator.models.Notification;
 import com.skocur.watchnotificationgenerator.sqlutils.DatabaseService;
+import com.skocur.watchnotificationgenerator.utils.CustomAddAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,38 +62,20 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.activity_home_fab_add_category).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                builder.setTitle("Add category");
+                CustomAddAlertDialog customAddAlertDialog = new CustomAddAlertDialog(HomeActivity.this);
+                customAddAlertDialog.setTitle("Add category");
 
-                LinearLayout container = new LinearLayout(HomeActivity.this);
-                container.setOrientation(LinearLayout.VERTICAL);
-
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(30, 5, 30, 5);
-
-                final EditText input = new EditText(HomeActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-                container.addView(input, params);
-                builder.setView(container);
-
-                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                customAddAlertDialog.setPositiveButton(new CustomAddAlertDialog.InputReadyListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(EditText input) {
                         Category category = new Category();
                         category.setCategoryName(input.getText().toString());
 
                         databaseService.addCategory(category);
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
                 });
 
-                builder.show();
+                customAddAlertDialog.build();
             }
         });
     }
