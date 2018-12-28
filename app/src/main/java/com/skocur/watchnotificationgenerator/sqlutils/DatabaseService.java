@@ -40,6 +40,10 @@ public class DatabaseService {
         return new CategoryDownloaderAsyncTask().execute().get();
     }
 
+    public Category getCategoryForName(String categoryName) throws InterruptedException, ExecutionException {
+        return new CategoryForNameDownloaderAsyncTask().execute(categoryName).get();
+    }
+
     private class NotificationInserterAsyncTask extends AsyncTask<Notification, Void, Void> {
 
         @Override
@@ -79,6 +83,15 @@ public class DatabaseService {
         @Override
         protected List<Category> doInBackground(Void... url) {
             return db.categoryDao().getAllCategories();
+        }
+    }
+
+
+    private class CategoryForNameDownloaderAsyncTask extends AsyncTask<String, Void, Category> {
+
+        @Override
+        protected Category doInBackground(String... data) {
+            return db.categoryDao().getCategoryForName(data[0]);
         }
     }
 }

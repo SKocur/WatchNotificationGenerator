@@ -15,6 +15,10 @@ public interface CategoryDao {
     @Query("SELECT * FROM category")
     List<Category> getAllCategories();
 
+    @Query("SELECT * FROM category " +
+            "WHERE category_name LIKE :categoryName")
+    Category getCategoryForName(String categoryName);
+
     @Insert
     void insertAll(Category... categories);
 

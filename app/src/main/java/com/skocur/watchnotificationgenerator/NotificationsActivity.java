@@ -53,7 +53,11 @@ public class NotificationsActivity extends AppCompatActivity {
                         .setPositiveButton(new CustomAddAlertDialog.InputReadyListener() {
                             @Override
                             public void onClick(EditText input) {
-                                // TODO: Add new activity in which user can create notification with passed extras to it
+                                Intent intent = new Intent(NotificationsActivity.this, NewNotificationActivity.class);
+                                intent.putExtra("notification_name", input.getText().toString());
+                                intent.putExtra("category_name", categoryName);
+
+                                startActivity(intent);
                             }
                         }).build();
             }

@@ -21,6 +21,10 @@ public class Category {
         this.categoryName = categoryName;
     }
 
+    public int getCategoryUid() {
+        return categoryUid;
+    }
+
     @Override
     public String toString() {
         return categoryName;
