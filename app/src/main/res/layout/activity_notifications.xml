@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".NotificationsActivity">
 
-    <ListView
-        android:id="@+id/activity_notifications_list"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notifications_recycler_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:itemCount="10">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/activity_notifications_fab_add_notification"
