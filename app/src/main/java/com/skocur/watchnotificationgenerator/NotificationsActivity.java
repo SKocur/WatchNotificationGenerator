@@ -61,7 +61,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
     class NotificationsListAdapter extends RecyclerView.Adapter<NotificationViewHolder> {
 
-        List<Notification> mNotifications;
+        private List<Notification> mNotifications;
 
         NotificationsListAdapter(List<Notification> notifications) {
             this.mNotifications = notifications;
@@ -91,9 +91,9 @@ public class NotificationsActivity extends AppCompatActivity {
 
     class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-        ViewGroup mViewGroup;
-        TextView mItemTitle;
-        ImageView mNewNotification;
+        private ViewGroup mViewGroup;
+        private TextView mItemTitle;
+        private ImageView mNewNotification;
 
         public NotificationViewHolder(@NonNull ViewGroup container) {
             super(container);
